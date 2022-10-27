@@ -1,0 +1,33 @@
+package controller
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+type students struct {
+    ID     string  `json:"id"`
+    name  string  `json:"name"`
+    gender string `json:"gender"`
+}
+
+var studets = []student{
+    {ID: "1", nane: "anny", gender: "girl"},
+    {ID: "2", name: "Jeru", gender: "man"},
+    {ID: "3", name: "cindy", gender: "girl"},
+}
+func getstudents(c *gin.Context) {
+    c.IndentedJSON(http.StatusOK, students)
+}
+
+func getstudentsbyID(c *gin.Context) {
+    id := c.Param("id")
+
+   
+    for _, a := range students {
+        if a.ID == id {
+            c.IndentedJSON(http.StatusOK, a)
+            return
+        }
+    }
+    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "student not found"})
+}
